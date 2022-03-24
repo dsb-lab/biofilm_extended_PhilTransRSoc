@@ -1,0 +1,20 @@
+PROG = Chen_etal_inC
+MAINOBJ = $(PROG).o
+MAINSRC = $(PROG).c
+
+CC = gcc 
+CFLAGS = -Wall -O3 -std=gnu99 
+OPTS = -I/share/apps/include/ -L/share/apps/lib/ #gobi
+LIBS = -lm -lgsl -lgslcblas 
+
+all: $(MAINOBJ)
+	$(CC) $(CFLAGS) $(OPTS) $(MAINOBJ) -o $(PROG) $(LIBS) 
+
+$(MAINOBJ):	$(MAINSRC)
+	$(CC) $(CFLAGS) $(OPTS) -c $(MAINSRC)
+
+%.o : %.c
+	$(CC) $(CFLAGS) $(OPTS) -c $< -o $@
+
+clean:
+	rm *.o

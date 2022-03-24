@@ -1,0 +1,28 @@
+PROG = Chen_etal_inC
+MAINOBJ = $(PROG).o
+MAINSRC = $(PROG).c
+
+CC = gcc 
+#CC = gcc-4.2
+#CFLAGS = -DDEBUG -Wall -O3 
+CFLAGS = -Wall -O3 -std=gnu99 -fnested-functions
+#OPTS = -lm  -lfftw3 -lgsl -lgslcblas -I/opt/local/include/ -I/usr/local/include/gsl/ -L/usr/local/lib/
+#OPTS = -lm  -lfftw3 -lgsl -lgslcblas -I/usr/include/ -I/usr/include/gsl/ -L/usr/lib/
+#OPTS = -lgslcblas -I/share/apps/include/ -L/share/apps/lib/
+#OPTS = -I/opt/local/include/ -I/export/apps/include/ -L/opt/local/lib -I/usr/local/include 
+#RMC added -L in above command, and -I/usr/local/include when uninstalling macports
+OPTS = -I/opt/local/include/ -I/export/apps/include/ -L/usr/local/lib 
+#RMC above after uninstalling xcode
+LIBS = -lm -lgsl -lgslcblas 
+
+all: $(MAINOBJ)
+	$(CC) $(CFLAGS) $(OPTS) $(MAINOBJ) -o $(PROG) $(LIBS) 
+
+$(MAINOBJ):	$(MAINSRC)
+	$(CC) $(CFLAGS) $(OPTS) -c $(MAINSRC)
+
+%.o : %.c
+	$(CC) $(CFLAGS) $(OPTS) -c $< -o $@
+
+clean:
+	rm *.o
